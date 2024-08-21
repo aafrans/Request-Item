@@ -20,13 +20,46 @@
             <path fill-rule="evenodd" clip-rule="evenodd" d="M12.9 11.1h-.79l-.28-.27a6.473 6.473 0 001.48-4.38C13.3 3.26 10.04 0 6.25 0S-.8 3.26-.8 6.25 3.26 12.5 6.25 12.5c1.65 0 3.16-.61 4.33-1.62l.27.28v.79l5.4 5.35 1.6-1.6-5.35-5.4zm-6.65 1.4a4.57 4.57 0 110-9.14 4.57 4.57 0 010 9.14z"></path>
           </svg>
         </button>
-        <button type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
-          <span class="sr-only">User Menu</span>
-          <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 11a5 5 0 100-10 5 5 0 000 10zm0 2c-5.33 0-8 2.67-8 4v1h16v-1c0-1.33-2.67-4-8-4z"></path>
-          </svg>
-        </button>
+        <div class="relative">
+          <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" type="button">
+            <span class="sr-only">User Menu</span>
+            <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="User Photo">
+          </button>
+          <!-- Dropdown menu -->
+          <div id="dropdownAvatar" class="hidden z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-44">
+            <div class="px-4 py-3">
+              <span class="block text-sm text-gray-900">John Doe</span>
+              <span class="block text-sm font-medium text-gray-500 truncate">name@flowbite.com</span>
+            </div>
+            <ul class="py-2" aria-labelledby="dropdownUserAvatarButton">
+              <li>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Earnings</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </nav>
+
+<!-- Tambahkan script ini untuk mengaktifkan dropdown -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const dropdownButton = document.getElementById('dropdownUserAvatarButton');
+    const dropdownMenu = document.getElementById('dropdownAvatar');
+
+    dropdownButton.addEventListener('click', function () {
+      dropdownMenu.classList.toggle('hidden');
+    });
+  });
+</script>
