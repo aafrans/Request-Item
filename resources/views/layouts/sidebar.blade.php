@@ -19,7 +19,7 @@
                     <span class="ml-3">Request</span>
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="{{ route('requests.show', ['id' => 1]) }}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-200">
                     <i class="fas fa-info-circle text-lg text-gray-600"></i>
                     <span class="ml-3">Detail</span>
@@ -30,7 +30,7 @@
                     <i class="fas fa-boxes text-lg text-gray-600"></i>
                     <span class="ml-3">Stok</span>
                 </a>
-            </li>
+            </li> -->
             <li>
                 <a href="{{ route('user.memos') }}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-200">
                     <i class="fas fa-sticky-note text-lg text-gray-600"></i>

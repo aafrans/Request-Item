@@ -25,7 +25,7 @@ class RequestController extends Controller
 
         $requests = $query->paginate(10); // Menampilkan 10 permintaan per halaman
 
-        return view('items.index', compact('requests'));
+        return view('requests.index', compact('requests'));
     }
 
     /**
@@ -36,7 +36,7 @@ class RequestController extends Controller
         $users = User::all(); // Mengambil semua user dari database
         $items = Item::all(); // Mengambil semua item dari database
 
-        return view('items.create', compact('users', 'items'));
+        return view('requests.create', compact('users', 'items'));
     }
 
     /**

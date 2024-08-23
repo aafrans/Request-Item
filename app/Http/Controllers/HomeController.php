@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Item;
 
 use Illuminate\Http\Request;
 
@@ -21,8 +22,13 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    // public function index()
+
     public function index()
     {
-        return view('user.dashboard');
+        $items = Item::all();
+
+        // Mengirim data barang ke view
+        return view('user.dashboard', ['items' => $items]);
     }
 }

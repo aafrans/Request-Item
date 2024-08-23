@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 
@@ -39,10 +39,14 @@ Auth::routes();
 // Route untuk dashboard pengguna
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('user.dashboard');
+    // permintaan
     Route::get('/requests', [RequestController::class, 'index'])->name('requests.index');
     Route::get('/requests/{id}', [RequestController::class, 'show'])->name('requests.show');
+    // stock
     Route::get('/stock/check', [StockController::class, 'check'])->name('stock.check');
+    // memos
     Route::get('/user/memos', [MemoController::class, 'index'])->name('user.memos');
+    // catatan
     Route::get('/items', [ItemController::class, 'index'])->name('items.index');
     Route::post('/items', [ItemController::class, 'store'])->name('items.store');
 });
