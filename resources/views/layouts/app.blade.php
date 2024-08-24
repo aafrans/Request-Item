@@ -11,7 +11,7 @@
 <body>
     @include('layouts.navbar')
     @include('layouts.sidebar')
-    <main class="flex-1 p-6">
+    <main class="p-6 sm:ml-64">
         @yield('content')
     </main>
 </body>

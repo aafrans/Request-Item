@@ -1,18 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Item</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js']) <!-- Pastikan untuk memuat Tailwind CSS dan Flowbite -->
-</head>
-<body class="bg-gray-100">
-
+@extends('layouts.app')
+@section('content')
 <div class="container mx-auto p-6">
     <div class="bg-white p-6 rounded-lg shadow-md">
         <h2 class="text-2xl font-semibold mb-4">Create New Item</h2>
 
-        <form action="{{ route('items.store') }}" method="POST">
+        <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Form Input for Item Details -->
@@ -28,7 +20,7 @@
                     <label for="kategori_id" class="block text-sm font-medium text-gray-700">Category</label>
                     <select id="kategori_id" name="kategori_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
                         <option value="">Select Category</option>
-                        @foreach ($kategories as $kategori)
+                        @foreach ($kategori as $kategori)
                             <option value="{{ $kategori->id }}" {{ old('kategori_id') == $kategori->id ? 'selected' : '' }}>
                                 {{ $kategori->name }}
                             </option>
@@ -39,7 +31,7 @@
                     @enderror
                 </div>
 
-                <div>
+                <div class="col-span-1 md:col-span-2">
                     <label for="specifications" class="block text-sm font-medium text-gray-700">Specifications</label>
                     <textarea id="specifications" name="specifications" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">{{ old('specifications') }}</textarea>
                     @error('specifications')
@@ -70,16 +62,14 @@
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
-
                 <div>
-                    <label for="image" class="block text-sm font-medium text-gray-700">Image URL</label>
-                    <input type="text" id="image" name="image" value="{{ old('image') }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    <label for="image" class="block text-sm font-medium text-gray-700">Upload Image</label>
+                    <input type="file" id="image" name="image" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
                     @error('image')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
-
             <div class="mt-6 flex justify-end">
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                     Save Item
@@ -89,5 +79,4 @@
     </div>
 </div>
 
-</body>
-</html>
+@endsection

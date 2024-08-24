@@ -3,55 +3,47 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
-use App\Http\Controllers\MemoController;
-use App\Http\Controllers\RequestController;
-use App\Http\Controllers\StockController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KategoriController;
 
 
 
 
-
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-Route::get('/', function () {
-    return view('auth.login');
-});
-
-
-
-// Rute autentikasi default (login, register, dll.)
 Auth::routes();
 
-// Route untuk dashboard pengguna
-Route::middleware(['auth'])->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('user.dashboard');
-    // permintaan
-    Route::get('/requests', [RequestController::class, 'index'])->name('requests.index');
-    Route::get('/requests/{id}', [RequestController::class, 'show'])->name('requests.show');
-    // stock
-    Route::get('/stock/check', [StockController::class, 'check'])->name('stock.check');
-    // memos
-    Route::get('/user/memos', [MemoController::class, 'index'])->name('user.memos');
-    // catatan
-    Route::get('/items', [ItemController::class, 'index'])->name('items.index');
-    Route::post('/items', [ItemController::class, 'store'])->name('items.store');
-});
+Route::get('/no-role', function () {
+    return view('no_role');
+})->name('no_role');
 
-// Route untuk dashboard admin (memastikan pengguna adalah admin)
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        if (auth()->user()->role === 'admin') {
+            return app(AdminController::class)->index();
+        } else {
+            return app(UserController::class)->index();
+        }
+    })->name('dashboard');
+
+    // Routes for admin dashboard
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+
+
+    // Routes for user dashboard
+    Route::get('/user', [UserController::class, 'index'])->name('user.dashboard');
+    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/users/{users}', [UserController::class, 'update'])->name('user.update');
+
+
+    // Routes for ItemController
+    Route::get('/items', [ItemController::class, 'index'])->name('items.index');
+    Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
+    Route::post('/items', [ItemController::class, 'store'])->name('items.store');
+    Route::get('/items/{item}', [ItemController::class, 'show'])->name('items.show');
+    Route::get('/items/{item}/edit', [ItemController::class, 'edit'])->name('items.edit');
+    Route::put('/items/{item}', [ItemController::class, 'update'])->name('items.update');
+    Route::delete('/items/{item}', [ItemController::class, 'destroy'])->name('items.destroy');
+
+    Route::resource('kategori', KategoriController::class);
 });

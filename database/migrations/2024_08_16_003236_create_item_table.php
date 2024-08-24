@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('quantity')->nullable();
             $table->decimal('price', 10, 2)->default(0);
             $table->decimal('stock', 10, 2)->default(0);
-            $table->string('image')->nullable();
+            $table->string('image');
             $table->timestamps();
 
             // Foreign keys

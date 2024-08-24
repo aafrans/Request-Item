@@ -1,7 +1,7 @@
 <nav class="bg-gray-50 fixed w-full z-50 top-0 left-0 border-b border-gray-200">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
-            <div class="flex items-center justify-start">
+            <div class="flex items-center justify-">
                 <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
                     <span class="sr-only">Open sidebar</span>
                     <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +28,7 @@
                     <!-- Dropdown menu -->
                     <div id="dropdownAvatar" class="hidden z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-44">
                         <div class="px-4 py-3">
-                            <span class="block text-sm text-gray-900">{{ Auth::user()->name }}</span>
+                            <span class="block text-sm text-gray-900">{{ auth()->user()->name }}</span>
                             <span class="block text-sm font-medium text-gray-500 truncate">{{ Auth::user()->email }}</span>
                         </div>
                         <ul class="py-2" aria-labelledby="dropdownUserAvatarButton">
