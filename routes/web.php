@@ -3,19 +3,17 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\PermintaanController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\KategoriController;
+
 
 
 
 
 Auth::routes();
-
-Route::get('/no-role', function () {
-    return view('no_role');
-})->name('no_role');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
@@ -30,10 +28,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 
 
+
     // Routes for user dashboard
     Route::get('/user', [UserController::class, 'index'])->name('user.dashboard');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
-    Route::put('/users/{users}', [UserController::class, 'update'])->name('user.update');
+    Route::put('/users/{user}', [UserController::class, 'update'])->name('user.update');
+    Route::resource('/user/request', PermintaanController::class);
+    // Request user
+
 
 
     // Routes for ItemController
@@ -45,5 +47,5 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/items/{item}', [ItemController::class, 'update'])->name('items.update');
     Route::delete('/items/{item}', [ItemController::class, 'destroy'])->name('items.destroy');
 
-    Route::resource('kategori', KategoriController::class);
+    Route::resource('/kategori', KategoriController::class);
 });

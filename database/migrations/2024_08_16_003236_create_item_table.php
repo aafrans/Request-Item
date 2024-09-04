@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('name');
             $table->text('specifications')->nullable();
             $table->integer('quantity')->nullable();
-            $table->decimal('price', 10, 2)->default(0);
-            $table->decimal('stock', 10, 2)->default(0);
-            $table->string('image');
+            $table->integer('price');
+            $table->integer('stock');
+            $table->string('image')->nullable();
             $table->timestamps();
 
             // Foreign keys

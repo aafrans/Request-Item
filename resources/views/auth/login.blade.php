@@ -18,6 +18,13 @@
 
     <div class="relative flex w-full min-h-screen">
         <!-- Left Background Column -->
+        @if ($message = session('error'))
+            <div class="absolute bottom-6 right-6">
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100" role="alert">
+                    <span class="font-medium">Message!</span> {{ $message }}
+                </div>
+            </div>
+        @endif
         <div class="lg:flex flex-1 items-center justify-center bg-cover bg-center"
             style="background-image: url('/img/ccc.png')">
             <div class="text-teal-500 text-center mx-6">

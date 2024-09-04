@@ -1,43 +1,56 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="p-4 sm:ml-64">
-    <div class="p-4 mt-14">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <!-- Card 1 -->
-            <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">Total Permintaan</h5>
-                <p class="mb-3 font-normal text-gray-700">Jumlah total permintaan yang telah Anda ajukan.</p>
-                <a href="#" class="inline-flex items-center text-blue-600 hover:underline">
-                    Lihat Detail
-                    <svg class="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M12.293 7.293a1 1 0 011.414 0L16 9.586a1 1 0 010 1.414l-2.293 2.293a1 1 0 01-1.414-1.414L13.586 10H6a1 1 0 010-2h7.586l-1.293-1.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                </a>
+<div class="p-6 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700" style="margin-top: 70px;">
+    <div class="container mx-auto">
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard User</h2>
+
+        <!-- Message Section -->
+        @if (session('status'))
+            <div class="mt-4 bg-green-100 border border-green-400 text-green-700 p-4 rounded">
+                {{ session('status') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="mt-4 bg-red-100 border border-red-400 text-red-700 p-4 rounded">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        <!-- User Data -->
+        <div class="mt-6">
+            <h3 class="text-xl font-medium text-gray-900 dark:text-white">Welcome, {{ auth()->user()->name }}!</h3>
+
+            <!-- Display some user-specific data -->
+            <div class="mt-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg shadow-md">
+                <p class="text-gray-700 dark:text-gray-300">Here you can manage your requests and view the status of your items.</p>
             </div>
 
-            <!-- Card 2 -->
-            <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">Permintaan Pending</h5>
-                <p class="mb-3 font-normal text-gray-700">Permintaan yang saat ini masih dalam proses verifikasi.</p>
-                <a href="#" class="inline-flex items-center text-blue-600 hover:underline">
-                    Lihat Detail
-                    <svg class="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M12.293 7.293a1 1 0 011.414 0L16 9.586a1 1 0 010 1.414l-2.293 2.293a1 1 0 01-1.414-1.414L13.586 10H6a1 1 0 010-2h7.586l-1.293-1.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                </a>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">Permintaan Ditolak</h5>
-                <p class="mb-3 font-normal text-gray-700">Permintaan yang tidak disetujui dan telah ditolak.</p>
-                <a href="#" class="inline-flex items-center text-blue-600 hover:underline">
-                    Lihat Detail
-                    <svg class="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M12.293 7.293a1 1 0 011.414 0L16 9.586a1 1 0 010 1.414l-2.293 2.293a1 1 0 01-1.414-1.414L13.586 10H6a1 1 0 010-2h7.586l-1.293-1.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                </a>
+            <!-- Card Slider -->
+            <div class="mt-6 relative">
+                <div class="overflow-hidden">
+                    <div id="slider" class="flex transition-transform duration-300 ease-in-out">
+                        @foreach ($items as $item)
+                            <div class="flex-shrink-0 w-64 mx-2">
+                                <div class="bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700 rounded-lg shadow-md p-4">
+                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $item->name }}</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">Category: {{ $item->category->name ?? 'N/A' }}</p>
+                                    <p class="text-gray-600 dark:text-gray-400">Stock: {{ $item->stock }}</p>
+                                    <a href="{{ route('request.create', $item->id) }}" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block">
+                                        Request Item
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <button id="prevBtn" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 p-2 rounded-full shadow">
+                    <svg class="w-6 h-6 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button id="nextBtn" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 p-2 rounded-full shadow">
+                    <svg class="w-6 h-6 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
             </div>
         </div>
     </div>
