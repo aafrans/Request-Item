@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 sm:px-8">
-    <div class="py-8">
+<div class="bg-gray-100 mx-auto sm:px-8 mt-15 p-6">
+    <div class="bg-white p-6 mt-10">
         <div class="flex justify-between items-center">
             <h2 class="text-2xl font-semibold leading-tight">Edit Item</h2>
         </div>

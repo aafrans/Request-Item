@@ -6,10 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 class AdminController extends Controller
 {
-    public function index(){
+    public function ManagementUser(){
         $users = User::get();
-
-        return view("admin.dashboard",compact('users'));
+        return view("admin.ManagementUser.index",compact('users'));
     }
 
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 sm:px-8 bg-white rounded" style="margin-top: 70px;">
+<div class="container mx-auto px-4 sm:px-8 bg-gray-100 rounded mt-10">
     <div class="py-8">
         <div class="flex justify-between items-center">
             <h2 class="text-2xl font-semibold leading-tight">Create New Item</h2>

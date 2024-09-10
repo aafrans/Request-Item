@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permintaan', function (Blueprint $table) {
+        Schema::create('approved_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('item_id')->nullable();
             $table->integer('quantity');
-            $table->enum('status', ['cek_spek', 'cek_stok', 'user_memo', 'it_beli', 'it_info']);
+            $table->enum('status',['requested', 'approved', 'in_process', 'completed', 'rejected'])->default('requested');
             $table->text('memo')->nullable();
             $table->timestamps();
 
             // Foreign keys
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('item_id')->references('id')->on('item'); // Ubah ke 'item' jika nama tabelnya 'item'
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('item_id')->references('id')->on('item')->onDelete('set null'); // Ubah ke 'item' jika nama tabelnya 'item'
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permintaan');
+        Schema::dropIfExists('approved_items');
     }
 };

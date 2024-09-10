@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Kategori;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
@@ -16,10 +17,10 @@ class ItemController extends Controller
     }
 
     // Menampilkan daftar item
-    public function index()
+    public function index(Request $request)
     {
-        $items = Item::with('kategori')->paginate(10);
         $kategori = Kategori::all();
+        $items = Item::paginate(10); // Atur jumlah item per halaman sesuai kebutuhan
         return view('items.index', compact('items', 'kategori'));
     }
 
@@ -81,24 +82,19 @@ class ItemController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        $data = $request->only(['name', 'kategori_id', 'specifications', 'quantity', 'price', 'stock']);
+
         if ($request->hasFile('image')) {
             // Hapus gambar lama jika ada
             if ($item->image && Storage::exists('public/' . $item->image)) {
                 Storage::delete('public/' . $item->image);
             }
             // Simpan gambar baru
-            $item->image = $request->file('image')->store('items', 'public');
+            $data['image'] = $request->file('image')->store('items', 'public');
         }
 
-        $item->update([
-            'name' => $request->name,
-            'kategori_id' => $request->kategori_id,
-            'specifications' => $request->specifications,
-            'quantity' => $request->quantity,
-            'price' => $request->price,
-            'stock' => $request->stock,
-            'image' => $item->image,
-        ]);
+        // Perbarui item dengan data baru
+        $item->update($data);
 
         return redirect()->route('items.index')->with('success', 'Item berhasil diperbarui.');
     }

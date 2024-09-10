@@ -8,7 +8,7 @@
     @vite(['resources/js/app.js', 'resources/css/app.css'])
 </head>
 
-<body class="bg-gray-300">
+<body>
     @include('layouts.navbar')
     @include('layouts.sidebar')
     <main class="p-6 sm:ml-64">
